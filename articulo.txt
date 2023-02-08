@@ -1,0 +1,1143 @@
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+7
+Redes neuronales artificiales para el procesamiento
+de imágenes, una revisión de la última década
+Ramírez Q. Juan A. y Chacón M. Mario I.
+Artificial neural networks for image processing, a review of the last decade
+Abstract— The widespread use of Artificial Neural Networks in
+the image processing field motivated a review of 200 papers. This
+review documents the use of neural network architectures for
+classification, recognition and segmentation in digital images. The
+present review describes different neural networks architectures as
+well as some of their modifications and applications on image
+processing. Then new neural networks models including spiking
+neurons are covered. An analysis of the literature reviewed
+organized by the type of image processing achieved by the neurons
+is described and finally the conclusion of this work are commented.
+Keywords— Artificial Neural networks, Image Processing,
+Computational Intelligent.
+Resumen— El amplio uso de las redes neuronales en el campo
+del procesamiento de imágenes, motiva a realizar una revisión de
+200 artículos donde se documentan algoritmos que utilizan alguna
+arquitectura de redes neuronales para tareas de clasificación,
+reconocimiento o segmentación en imágenes digitales. Esta revisión
+presenta los distintos modelos de redes así como sus modificaciones
+y aplicaciones en el procesamiento de imágenes. Luego se
+documentan algunos aspectos de nuevas redes neuronales
+incluyendo los modelos pulsantes, se presenta el análisis de los
+trabajos revisados organizado por el tipo de procesamiento que
+hacen las redes neuronales y finalmente se comentan las
+conclusiones del estudio realizado.
+Palabras clave— Redes Neuronales Artificiales, Procesamiento
+de Imágenes, Computación Inteligente.
+I. INTRODUCCIÓN
+Durante las décadas pasadas, surgieron modelos de redes
+neuronales artificiales (RNA) postuladas de diversas teorías del
+funcionamiento de redes neuronales biológicas. Desde entonces,
+han sido numerosos los trabajos propuestos donde se aplican
+RNAs en diferentes áreas de la ingeniería. Un área donde se
+utilizan ampliamente dichas redes es la de procesamiento de
+imágenes, donde existe una gran cantidad de trabajos propuestos
+con RNAs. Esto ha motivado diversas revisiones acerca de la
+contribución de dichos trabajos. En 2002 Egmont-Petersen
+realizó una revisión de 200 artículos de redes neuronales
+aplicadas al área de procesamiento de imágenes publicados en la
+década de los noventas. El enfoque presentado fue en los
+distintos tipos de redes feedforward, aunque hace referencia a
+redes como la red de Kohonen (SOM), Hopfield, Red neuronal
+celular (CNN), memorias asociativas y redes ART y su
+contribución en procesamiento de imágenes [1]. Misra en 2010
+realizó un estudio de las implementaciones en hardware de las
+RNAs en las últimas dos décadas [2]. Wang, Ma y Cheng en
+2010 publican una revisión de trabajos relacionados con la red
+pulso-acoplada (PCNN) y su aplicación en la solución de
+problemas del área de procesamiento de imágenes [3]. Otros
+estudios de RNAs se enfocan a distintas aplicaciones como
+sistemas financieros, técnicas biométricas, criptosistemas, control
+automático, etc [4][5][6]. Con respecto a otras técnicas de
+computación inteligentes y procesamiento de imágenes, Naz en
+2010 hace un estudio de las técnicas de segmentación en
+imágenes digitales con agrupamiento difuso con probabilidad
+espacial y Fuzzy C Means (FCM) para procesamiento de
+imágenes [7]. Senthilkumaran hace un resumen en 2009 donde
+documenta varios tipos de algoritmos para segmentar imágenes
+con técnicas de lógica difusa, algoritmos genéticos y la SOM[8].
+Sin embargo, en la literatura analizada, no se reportan
+revisiones de las distintas redes neuronales aplicadas a
+procesamiento de imágenes de los últimos años. Por lo tanto, en
+este trabajo se presenta una revisión de 200 trabajos publicados
+en los últimos diez años enfocándose a documentar las distintas
+modificaciones que han tenido las diferentes arquitecturas de
+redes neuronales para mejorar su aplicación en procesamiento de
+imágenes. De estos trabajos, 167 documentan RNAs y
+procesamiento de imágenes, 18 trabajos tratan sobre nuevos
+modelos de redes pulsantes y 15 son análisis de redes neuronales
+y procesamiento de imágenes. Debido a restricciones de espacio
+solo se documentan 77 de estas referencias. Los artículos
+revisados, fueron seleccionados de varios trabajos con base al
+prestigio de la revista o congreso que pública, el impacto que
+tiene la publicación en la contribución al procesamiento de
+imágenes y a la aplicación dirigida.
+La organización del artículo es la siguiente. En la Sección II
+se da una introducción a la taxonomía de los niveles del
+procesamiento de imágenes. En la Sección III se estudian las
+RNAs aplicadas a procesamiento imágenes y sus modificaciones,
+Manuscrito recibido el 9 de junio de 2011. Este trabajo fue financiado por el
+Fondo Mixto de Fomento a la Investigación Científica y Tecnológica
+CONACYT- Gobierno del Estado de Chihuahua, bajo el apoyo CHIH-2009-C02-
+125358.
+J.A. Ramírez y M.I. Chacón son miembros del Laboratorio de Percepción
+Visual con aplicaciones en Robótica en el Instituto Tecnológico de Chihuahua,
+Ave. Tecnológico 2909, Chihuahua Chih., C.P. 31310 México. Teléfono: +(52)
+614-413-7474; fax: +(52) 614-413-5187. e-mail: jaramirez@itchihuahua.edu.mx,
+mchacon@ieee.org
+Fig. 1. Niveles de procesamiento.
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+8
+en la Sección IV se documentan los resultados y en la Sección V
+las conclusiones.
+II. TAXONOMÍA DEL PROCESAMIENTO DE
+IMÁGENES
+Las técnicas para analizar una imagen digital se agrupan en
+un área llamada Procesamiento Digital de Imágenes. Estas
+herramientas se organizan según el nivel de procesamiento que se
+desea realizar para analizar la información contenida en una
+imagen digital. Estos niveles forman una cadena de
+procesamiento como la que se ve en la figura 1[1]. A
+continuación se describen brevemente:
+1) Pre-procesamiento. Operaciones para adaptar la información
+de una imagen y tener mejor análisis en pasos posteriores.
+Ejemplos de procesamiento son las operaciones de brillo y
+contraste.
+2) Segmentación. Operaciones para hacer una partición de la
+imagen en varias regiones que representen la información
+necesaria para el problema a resolver.
+3) Detección de objetos y clasificación. Determinación y
+clasificación de los objetos contenidos en la imagen.
+4) Análisis de imagen. Obtener información de alto nivel acerca
+de lo que la imagen muestra.
+Por su potencial para reconocer patrones de información las
+RNA han sido desde hace décadas herramientas para resolver
+problemas en cualquiera de los niveles del procesamiento de
+imágenes. Esto debido a que las imágenes digitales contienen
+mucha información difícil de interpretar por una maquina. En la
+literatura analizada, la mayoría de las aplicaciones de las RNAs
+en imágenes digitales fueron para tareas de segmentación y
+clasificación (CL). Para desglosar la información, la parte de
+segmentación se separo de la siguiente manera:
+1) Segmentación de forma (SS). Se refiere a generar una nueva
+imagen binarizada donde el resultado son regiones
+representativas de la información que se desea analizar.
+2) Detección de bordes (CS). Extracción de altas frecuencias en
+la imagen que representen contornos y límites de objetos en
+la imagen.
+3) Segmentación de color (CrS). Partición de la imagen en
+regiones que agrupan colores similares.
+4) Segmentación de Textura (TS).Partición de una imagen con
+base a los patrones de variación espacial de las intensidades
+de grises y color.
+5) Segmentación de movimiento (VS).Detección de objetos
+dinámicos en una secuencia de imágenes.
+También se reportaron trabajos para eliminación de ruido
+(NR), agrupamiento de datos para aplicaciones especificas (Ct) y
+comparación entre RNAs (VR).
+III. REDES NEURONALES Y PROCESAMIENTO DE
+IMÁGENES
+A. Breve historia de las RNAs
+El sistema nervioso de los animales se estructura con
+neuronas que forman redes para el procesamiento de información
+generada por los diversos estímulos de entrada de los sistemas
+sensoriales. Dichas redes, han servido también de inspiración
+para modelar las redes neuronales artificiales (RNA), las cuales
+son interconexiones de neuronas artificiales. Estas redes
+surgieron a partir de las ideas en la publicación de McCulloch y
+Pitts, donde se postula que las neuronas funcionan como
+dispositivos boléanos. Este postulado fue criticado como teoría
+biológica, pero permitió generar una neurona como un modelo
+lineal seguido de una función activación booleana. Aquí, la
+función lineal representa la sinapsis (unión entre neuronas) y la
+agregación de la información, mientras que la función no lineal
+representa el procesamiento que hace la neurona. Esto resultó en
+un modelo que se ilustra en la figura 2, donde la función lineal se
+ve en la ecuación (1).
+1
+n
+i i
+i
+r xw b
+
+  (1)
+Aquí, i x son los datos de entrada, i w son los pesos
+sinápticos y b un factor de polarización. El resultado de r , es
+procesado por una función binaria que da un uno o un cero a la
+salida según el valor de r [10].
+El perceptrón fue el primer modelo de red neuronal, el cual
+utiliza la neurona artificial de la figura 2, además de que tenía su
+arquitectura en tres capas y un algoritmo de aprendizaje. Este fue
+probado como un detector de caracteres ópticos, por lo que el
+campo de redes neuronales se inicio como una forma de procesar
+imágenes [10].
+Luego del perceptrón y otras redes con neuronas binarias,
+surgen otros modelos que también han sido utilizadas en el área
+de procesamiento de imágenes. Como las redes con funciones de
+activación continuas, tales como las sigmoidales o las funciones
+de base radial, definidas en las ecuaciones (2) y (3)
+respectivamente.
+  1
+1 exp( )
+f r
+ r
+
+ 
+(2)
+f (x,c)  f  x  c 
+(3)
+Donde  es un parámetro que caracteriza la inclinación de la
+función, c es un punto llamado centro. En la figura 3 se observan
+ejemplos de las funciones sigmoidal y radial con respecto a la
+agregación r . En general, los modelos clásicos de estas redes
+tienen la característica de ser supervisados, es decir, necesitan
+una referencia en un proceso de entrenamiento para obtener una
+salida deseada a una entrada determinada. También se han
+generado modelos con características no supervisadas como los
+mapas auto-organizados de Kohonen (SOM) y la Teoría de
+Resonancia Adaptiva (ART). Además han surgido otros modelos
+como las Redes Neuronales Recurrentes, y las que se basan en
+w1
+w2
+wn
+Σ
+x1
+x2
+…
+xn
+b
+y=f(r)
+Fig. 2. Modelo de neurona artificial con salida binaria[9].
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+9
+modelos probabilísticos que han sido por varios años muy útiles
+en el área del procesamiento de imágenes [1].
+En los últimos 10 años, han sido varias las arquitecturas de
+redes neuronales utilizadas para procesamiento de imágenes. De
+la literatura analizada se reportan trabajos relacionados a
+procesamiento de imágenes con la teoría de resonancia adaptiva
+(ART), red neuronal celular (CNN), perceptrón multicapa
+(MLP), redes neuronales oscilatorias (ONN), red neuronal
+pulsoacoplada (PCNN), redes neuronales recurrentes (RNN),
+redes neuronales basadas en modelos probabilísticos (RPNN),
+red neuronal de funciones radiales (RBFNN) y los mapas autoorganizados
+de kohonen (SOM). A continuación se presentan
+estos casos.
+B. Teoría de Resonancia adaptiva (ART)
+Es un modelo de red neuronal artificial que basa su
+funcionamiento en la forma en cómo el cerebro procesa
+información [11][12]. Esta arquitectura puede ser supervisada y
+no supervisada. Dicha red se basa en el dilema plasticidadestabilidad
+del aprendizaje y se implementa en tres arquitecturas,
+la ART1 para entradas binarias, ART2 para valores continuos y
+escalas de grises y ARTMAP que combina ART1 y ART2
+formando una estructura de aprendizaje supervisado. La forma
+básica de ART es un modulo de comparación, un parámetro de
+vigilancia y un modulo de reinicio. El modulo de comparación
+toma un vector de entrada y lo agrupa en alguna clase conocida
+por la red. El parámetro de vigilancia se encarga de indicar el
+grado de pertenencia de la entrada a alguna clase dada. Si la
+entrada no pertenece a ninguna clase, se crea una clase nueva.
+Esta red es muy útil por su capacidad para agrupar datos según su
+información, siendo una técnica de reconocimiento de patrones.
+En la búsqueda de artículos relacionados con el modelo
+ART, se observó que ART1 se ha utilizado para reconocimiento
+de huellas digitales y de caracteres. Mientras que ART2 y
+ARTMAP se utilizan como clasificadores de patrones o para
+agrupamiento de datos en distintas aplicaciones. ARTMAP
+apareció en todos los trabajos en su modelo difuso Fuzzy
+ARTMAP (FAM). Dentro de las modificaciones de ART, se
+encontró una utilizada por Liu quien publica ART MMAP (ART
+Mixture MAP), la cual consiste en una red neuronal ART basada
+en un mixure model (modelo de mezcla estadística) para la
+clasificación de subpixeles de regiones en imágenes
+satelitales[13]. Poh Tan presenta en [14] un modelo de ARTMAP
+modular (MARTMAP), la cual es una variación de ARTMAP
+enfocada al reconocimiento de patrones multiclases por medio de
+módulos. Simplified FAM (SFAM) es una variante de ART
+simplificada en dos capas una de entrada y otra de salida y se
+utiliza en reconocimiento de caracteres en [15].
+C. Red Neuronal Celular (CNN)
+Basada en la teoría de los autómatas celulares, está red
+permite la interacción de los vecinos de cada unidad en la red.
+Contiene una cantidad fija de unidades llamadas células, las
+cuales son sistemas no lineales, dinámicos donde la información
+de entrada es codificada para conocer su comportamiento. Cada
+célula esta localmente interconectadas con múltiples entradas que
+vienen de otras células. La dinámica puede ser continua (CTCNN)
+ó discreta (DT-CNN).
+Con respecto a la CNN, la mayoría de los trabajos revisados
+se enfocan a detección de bordes, segmentación de formas y
+algunos trabajos en detección de movimiento. En [16], Kawahara
+utiliza una CNN con plantilla dinámica (DCNN) que actualiza
+ciertos valores de aprendizaje en iteraciones y se utilizó para
+detección de movimiento. Strzelecki hace un método de
+segmentación de texturas en [17] basado en una red de
+oscilaciones sincronizadas con la CNN (SON) y al comparar el
+método con la clásica MLP obtuvo un mejor desempeño. En [18],
+Babatunde modifica el modelo de la CNN para mejorar la
+detección de bordes con respecto a otros métodos como canny.
+Kang en 2009 propone un algoritmo para segmentación de huella
+digital utilizando lógica difusa para obtener un umbral y a partir
+de ahí se utiliza una Threshold CNN (TCNN) para agrupar
+píxeles [19]. Corinto presenta una modificación de la CNN
+basado en aproximaciones polinomiales (PoCNN) probada en
+segmentación de regiones y se prueba su comportamiento
+dinámico [20]. En 2006 se desarrolló una arquitectura de CNN
+difuso (FCNN) para obtener segmentación de forma y bordes
+[21]. Una variante interesante es la DTCNN (CNN de tiempo
+discreto), la cual se vio en trabajos enfocados a segmentación de
+bordes [22]. Un aspecto interesante de la CNN además de sus
+variantes, es que es muy propicia para implementaciones en
+hardware. Por lo cual fue común encontrar diversas
+implementaciones de algoritmos CNN en chips o en GPUs
+(Unidades de procesamiento gráfico)[22][23]. Otro aspecto es
+que la CNN mostró en esta búsqueda es la capacidad en
+detección de bordes, ya que tal como en [18], fue común que los
+resultados con métodos clásicos de procesamiento de imágenes
+fueran comparados con la CNN en diversos trabajos, teniendo
+siempre una mayor capacidad para delimitar contornos con poca
+cantidad de ruido.
+D. Perceptrón multicapa (MLP) y Backpropagation (BP)
+Esta parte se refiere a redes perceptrón multicapa con
+funciones de activación sigmoidales que son entrenadas mediante
+algoritmos de aprendizaje BP. Debido a que MLP fue de los
+primeros modelos de redes neuronales, se plantean en muchos
+trabajos para comparar el desempeño entre un modelo propuesto
+y un perceptrón o un algoritmo de entrenamiento con BP. Otros
+autores como Narasimha han utilizado MLP para validar el
+desarrollo de algoritmos de optimización de RNAs[24].
+De los resultados de las búsquedas, Crespo hace una
+modificación donde propone una MLP con función de activación
+sigmoidal y pesos como funciones gaussianas entrenados con una
+(a) (b)
+Fig. 3. (a) Función sigmoidal. (b) Función de base radial.
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+10
+variante de BP para ajuste de pesos gaussianos y tuvo buen
+desempeño en imágenes multiespectrales[25]. Shiblee sugiere
+una variante de red con activación sigmoidal pero las
+agregaciones de los vectores de pesos y entradas, se basan en el
+algoritmo de la media ponderada generalizada (GMP) [26].
+Rajini en 2010 publica una evaluación del desempeño de
+algoritmos de entrenamiento de redes neuronales para
+reconocimiento de objetos. Para ellos, se utilizaron diferentes
+algoritmos de entrenamiento basados en BP. Las variaciones
+estudiadas son BPmom (variación de momentum), Through Time,
+Resilen y Quick. De estos, el algoritmo que logró converger más
+rápido fue el BPmom. Para probar los algoritmos se utilizaron
+varias imágenes [27]. El resto de los trabajos estudiados, se
+enfocan en aplicaciones de clasificación donde se auxilia la red
+de técnicas como transformada de Hough, FCM y Transformada
+del coseno.
+E. Red Neuronal Oscilatoria (ONN)
+La teoría de las redes oscilatorias se basa en los estímulos
+con oscilaciones periódicas sincronizadas en forma de grupos en
+la corteza visual y es posible que sirvan para detectar
+características en una escena visual. A partir de esto, se modelan
+redes con características oscilatorias que se van sincronizando
+según el patrón de entrada.
+En la literatura se reportaron diferentes ejemplos de redes
+oscilatorias, pero lo más común fue el modelo LEGION (locally
+excitatory globally inhibitory oscillator network) en el cual la
+oscilación se genera a partir de la retroalimentación de un
+vecindario de unidades excitables y un inhibidor global. Aquí
+cada unidad excitable es estimulada de forma proporcional a
+cada entrada formando una retroalimentación con el inhibidor y
+se crea una oscilación cuya forma depende del estimulo de
+entrada. De esta manera, se va generando una serie de
+oscilaciones que representan cada patrón de formas que tiene una
+imagen [28].
+De esta red se revisaron algunos trabajos, todos enfocados a
+segmentación de objetos y texturas. También fue común
+encontrar implementaciones en hardware con las redes
+oscilatorias. Fernández implementa el modelo LEGION en un
+FPGA en [29] para segmentación de carácter e implementa el
+mismo modelo en un circuito CMOS [30].
+F. Red Neuronal Pulso-Acoplada (PCNN)
+Esta red es utilizada para preprocesamiento y desarrollada
+por Eckhorn, a partir de la corteza visual del cerebro del gato. La
+PCNN se implementa en un modelo de una neurona por píxel y
+su arquitectura tiene tres módulos principales: el módulo
+dendritas, el módulo de encadenamiento y el generador de
+pulsos. En el árbol de dendritas recibe la información del
+vecindario y se procesa en el módulo de encadenamiento y el
+feeding, otra parte de la red que también contiene la entrada. El
+generador de pulsos tiene un umbral dinámico que se basa en el
+proceso interno que tiene la neurona en el feeding y el módulo de
+encadenamiento [3].
+Wang en 2010 publica un repaso de la PCNN donde se hace
+una investigación del uso de este modelo en 10 años, y se
+documentan modificaciones que se han publicado para
+simplificar el modelo en función de mejorar el tiempo de
+cómputo o ampliar las aplicaciones que puede tener la PCNN.
+Dentro de los modelos que se reportan, está la red de Kinser que
+se le conoce como intersecting cortical model (ICM), se trata de
+una PCNN simplificada con menos ecuaciones y diseñada
+específicamente para procesamiento de imágenes. Un modelo
+distinto es la PCNN con encadenamiento unitario (unit linking),
+que se hace a partir de la reducción de parámetros en la neurona
+y haciendo la parte del encadenamiento como una sola unidad de
+entrada. Otro es la PCNN multiespectral y se trata de una PCNN
+multicanal que consiste en un conjunto de PCNNs en paralelo de
+canales separados. En el trabajo de revisión de Wang también se
+hace referencia a la contribución que tienen los modelos de la
+PCNN en áreas del procesamiento de imágenes como
+segmentación, eliminación de ruido, detección de objetos y
+extracción de características debido su capacidad de
+preprocesamiento [3].
+G. Redes neuronales Recurrentes (RNN)
+Son redes neuronales que tienen conexiones formando un
+ciclo directo. Esto permite comportamientos dinámicos pero
+consumen más memoria que las redes directas. Los ejemplos
+clásicos de las redes recurrentes son las redes de Hopfield, la
+RNN bidireccional o la RNN de tiempo continuo. El uso de las
+RNN es muy variado tanto en procesamiento como en aplicación
+y tiene un gran potencial en agrupamiento de datos como ART.
+De los artículos revisados con la RNN, la mayoría se enfoca
+a segmentación de formas y movimiento. Aunque también se
+dieron algunos modelos de clasificación y agrupamiento de
+datos. Chatterjee en [31] propone el uso de una RNN de Elman y
+Jordan para generar escalas de grises en imágenes de medio tono.
+Zheng propone en [32] una capa de modo competitivo con una
+Lotka Volterra RNN para extraer y segmentar objetos en
+imágenes digitales. Zhou plantea un modo competitivo similar a
+Zheg pero es una RNN con neuronas de tiempo discreto para
+segmentar imágenes médicas [33]. Guanzhong sugiere una RNN
+de ciclo dinámico (DCRNN) basada en la red de Elman para
+segmentación de texturas [34]. Nishide propone una RNN con
+parámetro de polarización (RNNBP) para extraer objetos
+dinámicos basados en la perspectiva del sensado activo de un
+robot [35]. Bianchini desarrolla un algoritmo de localización de
+objetos donde una RNN de entrada-salida (IO RNN) se usa para
+procesar gráficas posicionales acíclicas y generar funciones en
+espacios euclidianos [36]. Reiter en [37] hace un modelo de
+segmentación y reconocimiento de movimiento con una red de
+neuronas para memorias recurrentes (LSTM RNN) y cadenas de
+Markov. En la literatura revisada solo se encontró un trabajo
+relacionado con la red original de Hopfield, propuesto por
+Morikawu para reducción de ruido [38].
+H. Red Neuronal con Funciones de Base Radial (RBFNN)
+Las RBFNN son redes que contienen funciones de activación
+de base radial que cumplen con el criterio que se ve en la
+ecuación (3). Generalmente estas funciones de activación son de
+tipo gaussiano. Las RBFNN, consisten típicamente de una red de
+tres capas; la de entrada, la oculta que contiene funciones de base
+radial no lineal y la capa de salida. Las RBFNN son muy
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+11
+utilizadas en aplicaciones específicas como segmentación de
+tejidos en imágenes médicas, inspección de calidad en procesos
+industriales, reconocimiento de rostros y gestos.
+De los artículos revisados que documentan procesamiento de
+imágenes con RBFNN, la mitad se enfocan a trabajos de
+clasificación, el resto utilizan la RBFNN principalmente para
+segmentación de formas. Veera hace una comparación en el
+funcionamiento de una RBFNN y una MLP para tareas de
+categorización y recuperación de datos [39]. Kumar en [40]
+utiliza una RBFNN para reducir tiempos de computación en
+algoritmos de segmentación de formas basado en agrupamiento
+difuso para imágenes médicas. Sing desarrolló un algoritmo de
+segmentación de imágenes del cerebro donde utilizó una RBFNN
+autoadaptiva que emplea una función para hacer un espacio de
+características separables no lineales y simular el proceso del
+cerebro en tratar con una situación nueva [41]. Benamrane
+propone el uso de una RBFNN con un algoritmo genético que
+calcula el número de neuronas con funciones de activación
+gaussianas para segmentación de imágenes para detección de
+bordes en imágenes médicas del cerebro [42].
+I. Redes Neuronales probabilísticas (RPNN)
+En la literatura analizada se encontraron tres tipos de redes
+probabilísticas, la red neuronal probabilística (PNN), el algoritmo
+de mezclas gaussianas (GMM) y la red neuronal aleatoria. La
+PNN es una RNA semi-supervisada basada en las redes de
+decisión bayesiana. La arquitectura consta de cuatro capas. La
+primera capa recibe el vector de entrada. La segunda capa tiene
+un conjunto de neuronas totalmente conectadas con las neuronas
+de la primera capa con funciones de activación dada por:
+   
+ 2
+2
+1 1
+2 2
+x
+d jk  jk x exp x m
+ 
+      
+ 
+(4)
+Donde d es el tamaño del vector, x es la entrada, x
+jk m es la media
+del j-ésimo vector de referencia, k es la clase correspondiente y
+ es un parámetro de suavizado. La tercera clase es la capa de
+suma que complete la estimación de probabilidad. La última capa
+clasifica la entrada de acuerdo a la decisión bayesiana[43]. Esta
+red es muy utilizada para clasificación y reconocimiento de
+patrones en aplicaciones especificas. Las PNN encontradas en la
+revisión se utilizan para segmentación de formas y texturas.
+Dentro de las modificaciones encontradas, está la PNN
+ponderada (WPNN), la cual resuelve algunas limitantes de la
+PNN clásica por una matriz de covarianza que remplaza los
+factores de suavizado singular y agrega ponderaciones a la capa
+de suma. Estos factores ponderados indican la probabilidad de
+que un vector de referencia pertenezca a una clase. La WPNN se
+utilizó para segmentación de formas en imágenes del cerebro y se
+probó con una SOM previa al procesamiento de la red [44][45].
+Otra variante presentada es la Background Neural Network
+(BNN), la cual sirve como modelo estadístico de los antecedentes
+de cada posición de un píxel en una secuencia de video [46]. Otro
+modelo de interés que se encontró fue una RNAs aleatoria, la
+cual se trata de una representación matemática de neuronas que
+intercambian señales pulsantes. Cada neurona es representada por
+un entero cuyo valor se incrementan cuando la célula recibe un
+pulso que la inhibe ó habilita, de manera que los impulsos se
+asocian con 1 y -1. De los artículos revisados solo se encontró
+una red neuronal aleatoria, que realiza segmentación de texturas
+utilizando también un filtro Gabor [47].
+Un algoritmo también probabilístico, es el modelo de
+mezclas gaussianas (GMM) y es una herramienta muy útil para
+agrupación en poblaciones de datos. Este método es una función
+de densidad de probabilidad paramétrica representada como la
+suma ponderada de densidades gaussianas [48]. Esta función de
+probabilidad es tomada como una red neuronal probabilística
+[49]. Es muy utilizada para clasificar patrones de voz y en
+segmentación de imágenes digitales. Fueron cuatro los artículos
+donde se utilizaba GMM, en el caso de Meur, Chevet en [50] se
+enfoca a hacer un algoritmo basado en la GMM para obtener la
+parte más sobresaliente de la imagen, mientras que Faiza en [49]
+y Blekas en [51] se enfocan en segmentación de texturas y en
+2009 Peñalver presenta un modelo del GMM para segmentación
+del color con base a la entropía de datos [52].
+J. Mapa Auto-Organizado de Kohonen (SOM)
+La SOM es una red no supervisada que se basa en un proceso
+competitivo donde cada neurona en una red neuronal se vuelve
+sensitiva a las categorías de los patrones de entrada.
+Generalmente tiene una arquitectura bidimensional y utiliza el
+aprendizaje competitivo para que las neuronas sin una
+distribución de datos específica se vayan aproximando a la
+distribución de los datos de entrada. Esta red se ha utilizado
+mucho en reconocimiento de patrones para aplicaciones y en
+análisis de texto [53][54].
+De los artículos seleccionados de la SOM, varias
+aplicaciones se enfocan a segmentación de formas geométricas,
+color, movimiento y un poco de segmentación de contornos. La
+SOM se encontró combinada con agrupamiento difuso, PCA y
+algoritmos genéticos. Un punto interesante es que se encontraron
+varios algoritmos que utilizan SOFM para procesar color, por
+ejemplo Zhang en 2007 plantea la SOFM para segmentar color
+donde una técnica wavelet mejora su eficiencia [55].
+Christodoulou, Michaelides sugieren en [56] un algoritmo donde
+la técnica K-nearest neighbor y la SOFM agrupen píxeles que
+generen clases de nubes. Otra variante presentada es la SOM
+paramétrica (PSOM), la cual es un conjunto variado de bases no
+lineales para hacer mapeos topológicamente ordenados con
+vectores de referencia y fue utilizada por Nölker y Ritter en [57]
+para calcular la posición de distintos puntos a través de los
+ángulos entre ellos, con el objetivo de ver la posición de los
+dedos en una imagen digital. Wu desarrolla una variante que la
+denomina SASOM (SOM estructura adaptiva) y se trata de un
+algoritmo que encuentra el número correcto de neuronas para una
+aplicación, que en el caso de [58] se utiliza para reconocimiento
+de gestos. Otra estrategia es un método propuesto basado en
+mecanismos de atención visual denominado SOBS (Self
+Organization Background Substraction), y es un algoritmo
+basado en diferencias de fondo pero auto-organizado para evitar
+ruidos en la detección de movimiento [59]. SOTM (Self
+Organization Tree Map) es otra estrategia como una SOM con
+características similares al modelo ART que Kyan y Jarrah
+presentan haciendo diversas pruebas y variantes para
+procesamiento de multimedia [60]. Salhi en 2009 hace una
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+12
+revisión de varios modelos inspirados en la forma y la dinámica
+de SOM [61]. Una estrategia común fue la de combinar la SOM
+con otros modelos de soft computing, muestra de esto es la
+combinación realizada por Awad en [62] que combina la SOM
+con un algoritmo genético haciendo un sistema neurogenético.
+Otra combinación son los mapas auto-organizados con técnicas
+de lógica difusa, un ejemplo de esto es el modelo FCNN (Fuzzy
+Clustering Neural Network) el cual es un clasificador que se
+utilizó en agrupamiento de píxeles para segmentar movimiento
+[63]. La SOTFN-SV es una red difusa con inferencia Sugeno
+auto-organizadas para segmentación de color [64].
+En estas modificaciones que fueron los modelos con mejores
+resultados de la SOM, se puede observar un marcado uso de la
+para detección de patrones de color y movimiento.
+K. Redes Pulsantes (SNN)
+Conforme se van generando más conocimiento en la forma
+en cómo funciona el sistema nervioso de los animales, nuevos
+modelos de RNAs surgen. Un esquema que ha tomado mucho
+auge en los últimos años es el de las RNAs pulsantes (SNN).
+Estas redes se inspiran a partir de que las células del sistema
+nervioso generan una serie de potenciales de acción que se
+pueden analizar como señales en el dominio del tiempo. En la
+figura 4, se puede observar que estas señales van generando una
+serie de picos o espigas cuya frecuencia entre pulsos y forma
+contiene la información necesaria para la percepción y
+procesamiento de la información [65].
+Este esquema es muy distinto del modelo inicial de
+McCulloch y Pitts, ya que implica que la información que
+codifica una neurona va más allá de una constante binaria.
+Algunos autores consideran que las SNNs se pueden considerar
+como una tercera generación de RNAs; la primera generación
+son las RNAs basadas en el modelo binario de la figura 2 y la
+segunda generación las neuronas con funciones de activación
+continúas [66][67]. La mayoría de estos modelos se establecen
+como ecuaciones diferenciales que definen la dinámica de una
+neurona biológica como por ejemplo el modelo de Hodgkin–
+Huxley el cual está dado por:
+ 
+dv 0.04v2 5v 140 u I
+dt
+du a bv u
+dt
+    
+ 
+(5)
+con un reinicio de espiga cuando v ≥ 30mV, se obtiene:
+( 65 )
+2
+v mV
+u u
+ 
+ 
+(6)
+donde u , v son variables dimensionales, a y b son parámetros
+dimensionales, t es tiempo. A partir de estas ecuaciones se
+diseñan neuronas pulsantes con salidas similares a las de la figura
+4[68].
+La teoría de neuronas pulsantes se inspira de cualquier parte
+del sistema nervioso, por lo que existen modelos basados en la
+parte del cerebro dedicada a procesar la información visual.
+Actualmente varios autores han propuesto distintas arquitecturas
+de SNNs, pero en la literatura analizada no se reportó un modelo
+más general. Sin embargo, existen algoritmos de aprendizaje
+como el STDP (Spike Time Dependet Plasticity) y en [69] se
+propone la Regla de Plasticidad de Actividad Sináptica (SAPR)
+para aprendizaje de SNNs. La SAPR se probó con neuronas
+pulsantes que hacen procesamiento de segmentación y
+clasificación en imágenes de tejidos biológicos. Otras pruebas
+realizadas en procesamiento de imágenes con las SNNs se ven en
+[70][71] donde se utilizan las SNN para detección de caracteres y
+líneas. En [72] se propone un modelo con SNN basado en
+atención selectiva y detalles sobresalientes de objetos.
+L. Otras arquitecturas
+También se dieron diversos casos donde las redes no se
+pudieron clasificar en una categoría en específico. Zhao en [73]
+propone una red caótica de mapas para segmentación de escenas
+y en [74] utiliza sistemas caóticos para agrupación de datos. Lee
+en 2004 utiliza oscilaciones de Lee en el modelo TCAN,
+(Transient Autoassoiative Network) para segmentación de escena
+[75]. Shen, Chang en 2005 presenta un modelo de segmentación
+de imágenes del cerebro basada en agrupamiento de FCM
+optimizado con una RNA [76]. Lin y Chang desarrollan un
+modelo de RNA difusa (FNN) con inferencia de Sugeno,
+distribuida en cinco capas, donde la capa dos tiene las variables
+lingüísticas con funciones de mezclas gaussianas, la tercer capa
+tiene las reglas difusas y se prueba en segmentación de texturas y
+caracteres [77]. Rasche en [78] presenta un modelo para
+detección de bordes y movimiento bidimensional de neuronas
+pulsantes que le llama membrana excitable. Mignotte en 2011
+desarrolla para segmentación no linear de color un sistema
+basado en agrupamiento difuso con SVM [79]. Juang propone
+dos arquitecturas neurodifusas de cuatro y seis capas para
+clasificar posturas del cuerpo y diagnóstico de dispositivos en
+imágenes térmicas [80][81]. La red de cuatro etapas tiene una
+capa de variables lingüística, otra de inferencia y otra de salida,
+mientras que la de seis tiene una capa intermedia de
+normalización. Yang en [82] desarrolla un algoritmo para
+reconocimiento de gestos con una TDNN, (Time Delay Neural
+Network) la cual es una red directa que hace ventaneos de tiempo
+en cada capa para hacer análisis de señales en el dominio del
+tiempo y clasificar gestos con manos.
+IV. ESTADÍSTICAS Y RESULTADOS DE LA REVISIÓN
+En esta sección se presenta un concentrado de la revisión de
+los trabajos analizados. En la Tabla I se pueden observar las
+Tiempo (ms)
+Potencial de membrana (mV)
+Tiempo (ms)
+Potencial de membrana (mV)
+(a) (b)
+Fig. 4. Potenciales de acción [66]. (a) Espiga o pulso en sinapsis. (b) tren
+de pulsos (espigas) a la salida de neurona.
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+13
+cantidades de artículos organizados por redes y tipo de
+procesamiento que se realiza en la imagen. La PCNN no se
+agregó en la Tabla I debido a que se tomó como base el estudio
+de Wang en [3], donde se documenta el potencial de la red y las
+aplicaciones a tareas de segmentación, reconocimiento de
+patrones y objetos. Tampoco se toma las SNN debido a que los
+trabajos analizados no reportan una red concreta. Se puede ver en
+la Tabla I que las aplicaciones más comunes son segmentación de
+formas y clasificación. Referente a segmentación de formas, las
+redes que reportaron más resultados fueron RBFNN, MLP con
+funciones de activación gaussianas, las ONN y las redes caóticas.
+Mientras que las redes que actúan más como clasificadoras son
+ART, PNN y RBFNN. La tercera forma de procesamiento más
+común es Ct, para lo cual fueron redes ART las más utilizadas
+aunque las RNN y la SOM reportaron trabajos. En segmentación
+de bordes, el modelo más utilizado en la literatura analizada fue
+CNN, mientras que en segmentación de color fue la SOM. Para
+segmentación de texturas el GMM, las redes aleatorias y PNN
+fueron los algoritmos más comunes. Un aspecto que se ve es que
+se reporta un resultado de eliminación de ruido, este se tomó
+como una categoría aparte por que fue la única aplicación en
+tareas e pre-procesamiento. Finalmente detección de movimiento
+aunque no generó muchos resultados, fue SOM y CNN los que
+reportaron trabajos con buenos resultados.
+También se puede en la Tabla I ver que las redes con más
+resultados son ART, CNN y SOM. ART mostró más resultados
+para agrupamiento de datos y clasificación, CNN muestra más
+resultados para detección de bordes y segmentación de formas,
+mientras que SOM muestra más resultados para segmentación de
+color. Además se puede observar también que CNN y SOM
+reportaron resultados en todas las formas de segmentación.
+Dentro de las aplicaciones más comunes, resalta que se
+obtuvieron varios resultados en fueron procesamiento de
+imágenes médicas, sensado remoto, reconocimiento de caracteres
+y reconocimiento de placas de automóvil.
+En la Tabla II se observa un resumen de las RNAs y
+modificaciones de redes que resultaron los modelos más exitosos
+reportados en el análisis de los 167 artículos y fueron descritos en
+la sección 3. En el caso de ART, sus variantes muestran que
+puede servir en tareas de segmentación de formas y objetos. Para
+CNN, las modificaciones fueron muy variadas en aplicaciones,
+ya que fueron útiles en tareas de detección de movimiento,
+texturas en imágenes medicas, segmentación de huella digital,
+formas y bordes. Además se presentan aplicaciones en hardware.
+Referente a LEGION, este fue un modelo documentado en varios
+trabajos de manera exitosa para segmentación de formas e
+implementaciones en hardware. Las modificaciones de la PCNN
+se enfocaron más en perfeccionar el modelo para procesamiento
+de imágenes y en el caso de la PCNN multicanal para
+aplicaciones de fusión de imágenes. Las redes recurrentes que se
+muestran en la Tabla II, tuvieron buenos resultados para
+aplicaciones específicas en movimiento y detección de objetos.
+El resto de las variantes de RNN obtuvieron buenos resultados en
+simulación. En el caso de las variantes de RBFNN, fue usual
+encontrarla con algoritmos genéticos y difusos para aplicaciones
+a reconocimiento de rostros y segmentación de imágenes del
+cerebro. Referente a los modelos de la categoría RPNN, se
+observó el marcado uso en segmentación y detección de texturas
+con GMM, además WPNN fue exitosa en segmentación de
+TABLA II. RNA Y SUS VARIANTES ENCONTRADAS
+ART CNN ONN PCNN RNN PRNN RBF NN SOM OTRAS MLP, BP
+ART MMAP DCNN LEGION ICM Elman
+Jordan
+PNN Autoadaptiva SOFM Caóticas
+MARTMAP SON PCNN
+multicanal
+Lotka
+Volterra
+RNN
+WPNN FCM RBFNN PSOM Neurodifusas MLP GMP
+SFAM TCNN Encadenamiento
+unitario
+DCRNN GMM NeuroRBFNN FCNN TCAN MLP pesos
+gaussianos
+PoCNN RNNBP RNA aleatoria SOTFN TDNN
+CTCNN IO RNN SASOM FNN
+LSTM RNN SOBS Membrana
+excitable
+Hopfield SOTM
+TABLA I. TIPO DE PROCESAMIENTO REALIZADO POR LAS RNA.
+Proc./Red ART CNN MLP,BP O NN RNN PRNN RBF NN SOM OTRAS TOTAL
+N R 0 0 0 0 1 0 0 0 0 1
+T S 0 2 0 1 1 4 0 1 1 10
+V S 1 2 0 0 0 0 0 3 2 8
+C S 0 8 0 0 1 1 1 1 1 13
+S S 2 6 10 9 4 5 7 5 5 53
+Ct 9 0 0 0 2 0 1 2 1 15
+Cr S 2 1 1 0 0 0 1 7 1 13
+CL 15 0 5 2 3 5 10 1 2 43
+VR 1 0 0 0 2 0 0 0 0 3
+OTROS 2 1 0 1 0 0 2 2 8
+TOTAL 30 21 17 12 15 15 20 22 15 167
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+14
+imágenes del cerebro y PNN para detección de placas en
+automóviles. Para la SOM, las variantes SOMF, PSOM, SOFT
+NN, SASOM muestran muy Buenos resultados en procesamiento
+de color, mientras que SOBS, FCNN útiles para detección de
+movimiento.
+V. CONCLUSIONES
+De la revisión de los 167 artículos, se pudo observar que las
+RNAs tuvieron un uso muy marcado para tareas de
+segmentación. De manera más específica, son muy utilizadas
+para segmentación de formas, color, textura, movimiento y
+bordes.
+De acuerdo al análisis de esta revisión de artículos,
+segmentación de forma fue la aplicación más común de varias
+arquitecturas de RNA, ya que es difícil extraer con métodos
+clásicos de procesamiento de imágenes formas irregulares que no
+tienen un patrón tan repetible, tales como tejidos biológicos,
+regiones en sensado remoto, patrones biométricos, inspección de
+producto, etc.
+Referente a procesamiento de color, los mejores resultados
+en este análisis fueron SOFM, PSOM, SOFT NN, SASOM. Para
+textura en este análisis fue GMM y la SON. Para segmentación
+de movimiento SOBS, FCNN, DTCNN y la TDNN han sido los
+modelos más exitosos de acuerdo con la literatura analizada y
+segmentación de bordes ha sido más estudiado por varios
+modelos basados en la CNN. Para tareas de clasificación las
+redes ART, MLP, RBFNN y PNN han sido las más utilizadas.
+La PCNN aunque no se documentó en este trabajo, se puede
+constatar mediante el estudio en [3] que es un modelo muy apto
+para segmentación de imágenes. Un detalle interesante es que la
+SOM ha sido documentada antes como un modelo muy flexible y
+en esta revisión resultó útil en todas las tareas de segmentación
+de imágenes. Otro detalle es que las ONN aparte de ser modelos
+exitosos para segmentación, también se documenta su
+flexibilidad en implementaciones en hardware. Además, CNN es
+documentada con una capacidad mayor que algoritmos clásicos
+en detección de bordes y segmentación de formas. En los últimos
+cuatro tipos de redes mencionados, se pudo observar su
+flexibilidad para hacer modificaciones y nuevos modelos, además
+de que generan resultados estables y consistentes en trabajos
+propuestos recientemente, por lo que se asume que se puede
+trabajar por varios años con estas redes. Sin embargo, durante la
+revisión de SNNs, se pudo notar que existen muchos laboratorios
+y universidades que aún proponen sus SNNs. La mayoría de las
+SNNs se basan en investigaciones recientes de los potenciales de
+acción del sistema nervioso, por lo que conforme vayan
+surgiendo nuevos conocimiento acerca del funcionamiento de la
+corteza visual, vendrán modelos de RNAs que funcionen de
+manera similar a la visión de los animales.
+RECONOCIMIENTOS
+Los autores agradecen al Fondo Mixto de Fomento a la
+Investigación Científica y Tecnológica CONACYT- Gobierno
+del Estado de Chihuahua, por el apoyo para realizar este trabajo
+bajo el apoyo CHIH-2009-C02-125358.
+REFERENCIAS
+[1] Egmont-Petersen, Ridder, Handels, “Image processing with neural
+networks—a review”, Pattern recognition, vol. 35, no. 10, pp. 2279-2301,
+Oct 2002.
+[2] Misra Janardan and Indranil Saha, “Artificial neural networks in hardware:
+A survey of two decades of progress”, Elsevier Nuerocomputing, vol. 74,
+no. 1, pp. 239-255, Dec 2010.
+[3] Zhaobin Wang, Yide Ma, Feiyan Cheng and Lizhen Yang; “Review of
+pulse-coupled neural network”, Elsivier Imagen and vision computer, vol.
+28, no. 1, pp. 5-13, Jan 2010.
+[4] Weihua and Yuhong Li, “Applications of Artificial Neural Networks in
+Financial Economics: A Survey”, IEEE Computational Intelligence and
+Design (ISCID), vol. 1, Oct. 2010, pp. 211-214.
+[5] Chowdhury, F.N, “A survey of neural networks applications in automatic
+control”, IEEE Proceedings of the 33rd Southeastern Symposium on System
+Theory, Athens OH, Mar 2001, pp. 349-353.
+[6] Micheli and Tzanakou, “A Comparative Survey on Biometric Identity
+Authentication Techniques Based on Neural Networks”, IEEE Biometrics:
+Theory, Methods, and Applications book, Nov 2010, pp. 47-79.
+[7] Naz Samina, Hammad Majed and Humanyun Irshad,“Image Segmentation
+using Fuzzy Clustering: A Survey”, International Conference on Emerging
+Technologies; islamabad, Oct 2010, pp. 181-186.
+[8] N Senthilkumaran and R. Rajesh, “Image Segmentation - A Survey of Soft
+Computing Approaches”, IEEE computer society, International Conference
+on Advances in Recent Technologies in Communication and Computing,
+Oct 2009, pp. 844-846.
+[9] Lefteri H. Tsoukalas, Robert E. Uhrig, “Fuzzy and neural approaches in
+engineering”, Wiley & SONS INC, 1997, pp. 191-227.
+[10] Robert Hecht-Nielsen, Perceptrons; University California San Diego,
+Institute for Neural Computation Technical Report No. 0403, Jul 2004.
+[11] S, Grossberg, “Competitive learning: from interative activation to adaptive
+theory”, Cognitive science, vol. 11, no. 1, pp. 23-63, Jan 1987.
+[12] Grossberg S and Carpenter G, “Adaptive Resonance Theory”, Cambridge,
+Massachusetts : The Handbook of Brain Theory and Neural Networks, no.
+2, (1-12), 1998.
+[13] Weiguo Liu, Karen C. Seto, Elaine Y. Wu, Sucharita Gopal, and Curtis E.
+Woodcock, “ART-MMAP: A Neural Network Approach to subpixel
+classification”, IEEE transactions on geoscience and remote sensing, vol.
+42, no. 9, pp. 1976-1983, Sep 2004.
+[14] Tan, Chue Pon, Chen Change Loy, Weng Kin Lai, Chee Peng Lim, “Robust
+modular ARTMAP for multi-class shape recognition”, IEEE World
+Congress on Computational Intelligence, Jun 2008, pp. 2405-2412.
+[15] M Keyarsalan, GH A Montazer and K Kazemi, “Font-based persian
+character recognition using Simplified Fuzzy ARTMAP neural network
+improved by fuzzy sets and Particle Swarm Optimization”, IEEE,
+Evolutionary Computation Congress, Trondheim, May 2009, pp. 3003-
+3009.
+[16] Makasakazu Kawahara, Takashi Inoue and Yoshifumi Nishio, “Image
+Processing Application Using CNN with Dynamic Template”, International
+Workshop on Cellular Nanoscale; Berkeley CA, Feb 2010, pp. 1-6.
+[17] Michal Strzelecki, Joonwhoan Lee and Sung-Hwan Jeong, “Analysis of
+Biomedical Textured Images with Application of Synchronized Oscillatorbased
+CNN”, IEEE 12th International Workshop on Cellular Nanoscale
+Networks and their Applications (CNNA), Berkeley CA, Feb 2010, pp. 1-6.
+[18] Hezekiah Babatunde, Olusegun Folorunso and Adio Akinwale, “A Cellular
+Neural Network- Based Model for Edge Detection”, Journal of Information
+and Computing Science, vol. 5, no. 1, pp. 3-10, 2010.
+[19] Jiaying Kang and Wenjuan Zhang, “Fingerprint Segmentation using
+Cellular Neural Network”, IEEE International Conference on
+Computational Intelligence and Natural Computing, vol. 2, no. 1, Jun 2009,
+pp. 11-14.
+[20] F Corinto, M Biey and M Gilli, “Non-linear coupled CNN models for
+multiscale image analysis”, International journal of circuit theory and
+applications, vol. 34, no. 1, pp. 77-88, Jan 2006.
+[21] Koki Nishizono and Yoshifumi Nishio, “Image Processing of Gray Scale
+Images by Fuzzy Cellular Neural Network”, RISP International Workshop
+nonlinear circuits, Honolulu Hawaii, USA, Mar 3-5 2006, pp. 90-93.
+[22] Fujita Tomohiro and Okamura Takashi, “CAM-Universal Machine: A
+DTCNN Implementation for Real-Time Image Processing”, 11th
+International Workshop on Cellular Neural Networks and their
+Applications, Santiago de Compostela, Spain, pp. 219-223, Jul 2008.
+[23] Ryanne Dolan, Guilherme DeSouza, “GPU-Based Simulation of Cellular
+Neural Networks for Image Processing”, Proceedings of International Joint
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+15
+Conference on Neural Networks, Atlanta Georgia, USA, Jun 2009, pp. 730-
+735.
+[24] Pramod L. Narasimha, Walter H. Delashmit, Michael T. Manry, “An
+integrated growing-pruning method for feedforward network training”,
+Science Direct, Neurocomputing, vol. 71, no. 13-15, Aug 2008, Pages 2831-
+2847.
+[25] Crespo Juan, Duro Richard and Lopez Fernando, “Gaussian Synapse ANNs
+in Multi- and Hyperspectral Image Data Analysis”, IEEE transactions on
+instrumentation and measurement, vol. 52, no. 3, pp. 724-732, Jun 2003.
+[26] Mohd Shiblee, B Chandra, Prem K Kalra, “Generalized Power Mean
+Neuron Model”, IEEE, Third International Conference on Knowledge
+Discovery and Data Mining; Jan 2010, pp. 276-279.
+[27] G K Rajini and Dr Ramachandra Reddy, “Performance Evaluation of
+Neural Networks for Shape Identification in Image Processing”, IEEE
+computer society, International Conference on Signal Acquisition and
+Processing; Bangalore, India, 2010, pp. 255-258.
+[28] Naeem Shareef, DeLiang L. Wang and Roni Yagel, “Segmentation of
+Medical Images Using LEGION”, IEEE transactions on medical imaging,
+vol. 18, no. 1, pp. 74-91, Jan 1999.
+[29] Dênis Fernandes, Jeferson Polidoro Stedile and Philippe Olivier Alexandre
+Navaux, “Architecture of Oscillatory Neural Network for Image
+Segmentation”, IEEE computer society, Symposium on Computer
+Architecture and High Performance Computing, 2002, pp. 29-36.
+[30] Daniel Fernández, Gerard Villar, Eva Vidal, Eduard Alarcón, Jordi Cosp
+and Jordi Madrenas, “Mismatch-tolerant cmos oscillator and excitatory
+synapse for bioinspired image segmentation”, IEEE International
+Symposium, Circuits and Systems, ISCAS, May 2005, pp. 4114-4117.
+[31] Arpitan Chatterjee, Kanay Ch Paul and Bipan Tudu,“Application of
+recurrent neural network for generating grayscale digital half-tone images”,
+IEEE computer society, International Conference on Emerging Applications
+of Information Technology, Feb 2011, pp. 41-44.
+[32] Bochuan Zheng, Zhan Yi, “Extracting Long Contour by Using the
+Competitive Layer Model of the Lotka-Volterra Recurrent Neural
+Networks”, IEEE International Conference on Advanced Computer Theory
+and Engineering, vol. 3, Aug 2010, pp. 627-631.
+[33] Wei Zhou and Jacek Zurada, “Discrete-time Recurrent Neural Networks for
+Medical Image Segmentation based on Competitive Layer Model with LT
+neurons”, IEEE Biomedical Engineering and Computer Science
+international conference, April 2010, pp. 1-4.
+[34] Guanzhong Li, “A New Dynamic Strategy of recurrent neural network”,
+IEEE procedings Cognitive Informatics international conference, Kowloon,
+Hong Kong, Jun 2009, pp. 486-491.
+[35] Shun Nishide, Tetsuya Ogata, Ryunosuke Yokoya, Jun Tani, Kazunori
+Komatani, and Hiroshi G. Okuno, “Active Sensing based Dynamical Object
+Feature Extraction”, IEEE International Conference on Intelligent Robots
+and Systems, Nice Francia, Sep 2008, pp. 1-7.
+[36] Monica Bianchini, Marco Maggini and Lorenzo Sarti, “Object localization
+using Input/Output Recursive Neural Network”, IEEE Computer society
+international conference Pattern Recognition, vol. 3, Sep 2006, pp. 1-4.
+[37] Reiter Stephan, Björn Schuller and Gerhard Rigoll, “A combined LSTMRNN
+- HMM - approach for meeting event segmentation and recognition”,
+IEEE procedings, International conference on Speech and Signal
+Processing, Acoustics, May 2006, vol. 2, pp. 393-396.
+[38] Hirotuku Morikawu and Shigeo Wudu, “Scene discrimination by recalling
+with visual neural system”, IEEE International Conference on Neural &
+Signal, Nangng China, Dec 2003, pp. 200-203.
+[39] Veera Ms B, “Research Study of Neural Networks for image categorization
+and retrieval”, IEEE Computer and Automation Engineering International
+Conference, Singapure, vol. 2, Feb 2010, pp. 686-690.
+[40] S Sathish Kumar, M. Moorthi, M Madhu, Dr R Amutha, “An improved
+method of segmentation using fuzzy-neuro logic”, IEEE computer society
+Second International Conference on Computer Research and Development,
+May 2010, pp. 671-675.
+[41] K. Sing, D. K. Basu. M. Nasipuri, and M. Kundu, “Self-adaptive RBF
+neural network-based segmentation of medical images of the brain”, IEEE
+Procedings Intelligent Sensing and Information conference, Jan 2005, pp.
+447-452.
+[42] Benamrane Nacéra and Abdelkader Fekir, “Medical Images Segmentation
+By Neuro-Genetic Approach”, IEEE computer society, International
+Conference on Information Visualisation, Jul 2005, pp. 981-986.
+[43] Rivas-Perea P, J. G. Rosiles, M. I. Chacon M, “Traditional and Neural
+Probabilistic Multispectral Image Processing for the Dust Aerosol Detection
+Problem”, IEEE Southwest Symposium Image Analysis & Interpretation
+(SSIAI), 23-25 May 2010, pp. 169 – 172.
+[44] Tao Song, Mo Jamshidi, Roland R. Lee and Mingxiong Huang, “A Novel
+Weighted Probabilistic Neural Network for MR Image Segmentation”,
+IEEE International Conference on Systems, Man and Cybernetics, vol. 3,
+Oct 2005, pp. 2501-2506.
+[45] Tao Song, M. Jamshidi, Roland R. Lee and Mingxiong Huang, “A Modified
+Probabilistic Neural Network for Partial Volume Segmentation in Brain MR
+Image”, IEEE Transactions On Neural Networks, vol. 18, no. 5, pp. 1424-
+1432, Sep 2007.
+[46] Culibrk Dubravko, Oge Marques and Daniel Socek, “Neural Network
+Approach to Background Modeling for Video Object Segmentation”, IEEE
+Transactions On Neural Networks, vol. 18, no. 6, pp. 1614-1627, Nov 2007.
+[47] Rong Lu and Yi Shen, “Image Segmentation Based on Random Neural and
+Gabor filters”, IEEE Engineering in Medicine and Biology 27th Annual
+Conference, pp. 6464- 6467, Jan 2006.
+[48] Reynolds, Douglas, “Gaussian mixture Model”, Massachusetts, MIT
+Lincoln Laboratory, Disponible:
+www.ll.mit.edu/mission/.../ist/.../0802_Reynolds_Biometrics-GMM.pdf
+[49] Faiza Mekhalfa, Nafaâ Nacereddine and Aïcha Baya, “Unsupervised
+Algorithm for Radiographic Image Segmentation Based on the Gaussian
+Mixture Model”, International Conference Eurocon 2007, Warsaw, Sep
+2007, pp. 289-293.
+[50] Oliver Le Meur and Jean-Claude Chevet, “Relevance of a Feed-Forward
+Model of Visual Attention for Goal-Oriented and Free-Viewing Tasks”,
+IEEE Transactions On Image Processing, vol. 19, no. 11, pp. 2801–2813,
+Nov 2010.
+[51] K Blekas, “A Spatially Constrained Mixture Model for Image
+Segmentation”; IEEE Transactions On Neural Networks, vol. 16, No. 4, pp.
+494–498, April 2007.
+[52] Antonio Peñalver, Francisco Escolano and Juan Sáenz, “Learning Gaussian
+Mixture Models With Entropy-Based Criteria”, IEEE Transactions On
+Neural Networks, vol. 20, no. 11, pp. 1756-1771, Nov 2009.
+[53] M.N.M. Sap, Ehsan Mohebi, “Hybrid Self Organizing Map for Overlapping
+Clusters”, International Journal of Signal Processing, Image Processing and
+Pattern Recognition, pp. 11-20, 2008.
+[54] Teuvo Kohonen, Samuel Kaski, Krista Lagus, Jarkko Salojärvi, Jukka
+Honkela, Vesa Paatero, and Antti Saarela, “Self Organization of a Massive
+Document Collection”, IEEE Transactions on Neural Networks, vol. 11, no.
+3, pp. 574-585, May 2000.
+[55] Jun Zhang and Qieshi Zhang, “Color Image Segmentation Based on
+Wavelet Transformation and SOFM Neural Network”, IEEE Proceedings of
+International Conference on Robotics and Biomimetics, Dec 2007, pp.
+1778-1781.
+[56] Christodoulos I. Christodoulou, Silas C. Michaelides, and Constantinos S.
+Pattichis, “Multifeature Texture Analysis for the Classification of Clouds in
+Satellite Imagery”, IEEE transactions on geoscience and remote sensing,
+vol. 41, no. 11, pp. 2662–2668, Nov. 2003.
+[57] Claudia Nölker and Helge Ritter, “Visual Recognition of Continuous Hand
+Postures”, IEEE Transactions On Neural Networks, vol. 13, no. 4, pp. 983–
+994, Jul 2002.
+[58] Ying Wu and Thomas Huang, “Nonstationary Color Tracking for Vision-
+Based Human–Computer Interaction”, IEEE transactions on neural
+networks, vol. 13, no. 4, pp. 948–960, Jul 2002.
+[59] Lucia Maddalena and Alfredo Petrosino, “A Self-Organizing Approach to
+Background Subtraction for Visual Surveillance Applications”, IEEE
+Transactions On Image Processing, vol. 17, no. 7, pp. 1168-1177, Jul 2008.
+[60] Matthew Kyan, Kambiz Jarrah, Paisarn Muneesawang and Ling Guan,
+“Strategies for Unsupervised Multimedia Processing: self-organizing trees
+and forests”, IEEE computational intelligence magazine, vol. 1, no. 2, pp.
+27- 40, May 2006.
+[61] Mohamed Salah Salhi, Najet Arous, and Noureddine Ellouze, “Principal
+temporal extensions of SOM: Overview”, International Journal of Signal
+Processing, Image Processing and Pattern Recognition, vol. 2, no. 4, pp.
+61-84, Dec. 2009.
+[62] Mohamad Awad, Kacem Chehdi, and Ahmad Nasri, “Multicomponent
+Image Segmentation Using a genetic algorithm and artificial neural
+network”, IEEE Geoscience and remote sensing letters, vol. 4, no. 4, pp.
+571–575, Oct. 2007.
+[63] Xiaoou Tang, Xinbo Gao, Jianzhuang Liu and Hongjiang Zhang, “A
+Spatial-Temporal Approach for Video Caption Detection and Recognition”,
+IEEE Transations Neural Networks, vol. 13, no. 4, pp. 96–971, Jul 2002.
+RIEE&C, REVISTA DE INGENIERÍA ELÉCTRICA, ELECTRÓNICA Y COMPUTACIÓN, Vol. 9 No. 1, JULIO 2011.
+ISSN 1870 - 9532
+16
+[64] Chia-Feng Juang, Shih-Hsuan Chiu, and Shu-Wew Chang, “A Self-
+Organizing TS-Type Fuzzy Network With Support Vector Learning and its
+Application to Classification Problems”, IEEE Transactions on Fuzzy
+Systems, vol. 15, no. 5, pp. 998–1008, Oct 2007.
+[65] Laurent Perrinet, Manuel Samuelides, and Simon Thorpe, “Coding Static
+Natural Images Using Spiking Event Times: Do Neurons Cooperate?”,
+IEEE Transactions on Neural Networks, vol. 15, no. 5, pp. 1164-1175, Sep
+2004.
+[66] Peter Dayan and L.F. Abbott, “Theoretical Neuroscience”, MIT Press, 2009
+pp. 1-15.
+[67] N.G. Pavlidis, D.K. Tasoulis, V.P. Plagianakos, and M.N. Vrahatis,
+“Spiking Neural Network Training Using Evolutionary Algorithms”, IEEE
+Proceedings International Join Conference on Neural networks, 2005, 2190-
+2194 vol. 4.
+[68] Eugene M Izhikevich, “Simple Model of Spiking Neuron”, IEEE
+Transactions on Neural Networks, vol. 14, no. 16, pp. 1569-1572, Sep 2004.
+[69] Waldemar Swiercz, Krzysztof J. Cios, Kevin Staley, Lukasz Kurgan, Frank
+Accurso, and Scott Sagel, “A New Synaptic Plasticity Rule for Networks of
+Spiking Neurons”, Ieee Transactions on Neural Networks, vol. 17, no. 1, pp.
+94-105, Jan 2006.
+[70] QingXiang Wu, T.M. McGinnity, Liam Maguire and Jianyong Cai,
+“Detection of Straight Lines Using a Spiking Neural Network Model”, Fifth
+International Conference on Natural Computation, 2009, pp. 385-389.
+[71] Mohammad A. Bhuiyan, Rommel Jalasutram, and Tarek M. Taha,
+“Character recognition with two spiking neural network models on
+multicore architectures” IEEE Symposium on Computational Intelligence
+for Multimedia Signal and Vision Processing, 2009, pp. 29-34.
+[72] KangWoo Lee, Hilary Buxton, and Jianfeng Feng, “Cue-Guided Search: A
+Computational Model of Selective Attention”, IEEE Transactions on Neural
+Networks, vol. 16, no. 4, pp. 910-924, July 2005
+[73] Liang Zaho and Elbert Macau, “A Network of Dynamically Coupled
+Chaotic Maps for Scene Segmentation”, IEEE Transactions On Neural
+Networks, vol. 12, no. 6, pp. 1375–1385, Nov 2001.
+[74] Liang Zhao Andre C. P. L. F. de Carvalho, and Zhaohui Li, “Pixel
+Clustering by Adaptive Pixel Moving and Chaotic Synchronization”, IEEE
+Transactions On Neural Networks, vol. 15, no. 5, pp. 1176–1185, Sep 2004.
+[75] Raymond T S Lee, “Transient-Chaotic Autoassociative Network (TCAN)
+Based on Lee Oscillators”, IEEE Transactions On Neural Networks, vol.
+15; no. 5, pp. 1228–1243, Sep 2004.
+[76] Shan Shen, William Sandham, Malcolm Granat, and Annette Sterr, “MRI
+Fuzzy Segmentation of Brain Tissue Using Neighborhood Attraction With
+Neural-Network Optimization”, IEEE Transactions on Information
+Technology in Biomedicine, vol. 9, no. 3, pp. 459–467, Sep 2005.
+[77] Chin_teng Lin, Wen-Chang and Sheng-Fu Liang, “An On-Line ICAMixture-
+Model-Based Self-Constructing Fuzzy Neural Network”, IEEE
+Transactions On Circuits And Systems, vol. 52, no. 1, pp. 207–221, Jan
+2005.
+[78] Christoph Rashe, “Neuromorphic Excitable Maps for Visual Processing”,
+IEEE Transactions On Neural Networks, vol. 18, no. 2, pp. 520–529, Mar
+2007.
+[79] Max Mignotte, “MDS-Based Multiresolution Nonlinear Dimensionality
+Reduction Model for Color Image Segmentation”, IEEE Transactions On
+Neural Networks, vol. 22, no. 3, pp. 447-460, Mar 2011.
+[80] Chia Feng Juang, Shih-Hsuan Chiu and Shen-Jie Shiu; “Fuzzy System
+Learned Through Fuzzy Clustering and Support Vector Machine for Human
+Skin Color Segmentation”; IEEE Transactions On Systems Man And
+Cybernetics, vol. 37, no. 6, pp. 1077–1087, Nov 2007.
+[81] Chia Feng Juang, Chia-Ming Chang, “Human Body Posture Classification
+by a Neural Fuzzy Network and Home Care System Application”, IEEE
+Transactions On Systems Man And Cybernetics, vol. 37, no. 6, pp. 984–994,
+Nov 2007.
+[82] Ming Hsuan Yang, Narendra Ahuja and Mark Tabb; “Extraction of 2D
+Motion Trajectories and Its Application to Hand Gesture Recognition”,
+IEEE Transactions On Pattern Analysis And Machine Intelligence, vol. 24,
+no. 8, pp. 106-1074, Aug 2002.
+Juan A. Ramírez-Quintana nació en Chihuahua
+Chih. México en 1981. Recibió el grado de
+Licenciatura (2004) y Maestro en Ciencias (2007) en
+Ingeniería Electrónica por el Instituto Tecnológico de
+Chihuahua.
+Desde el 2008 hasta el 2011 fue profesor en el
+Instituto Tecnológico de Chihuahua. Actualmente es
+estudiante de doctorado en el Instituto Tecnológico de
+Chihuahua. Sus áreas de interés son visión por
+computadora, procesamiento digital de imágenes,
+percepción visual e inteligencia computacional.
+El M.C. Ramírez es miembro estudiante de la IEEE.
+Mario I. Chacón Murguía nació en la ciudad de
+Chihuahua en 1959. Recibió los grados de ingeniería
+(1982) y M.C. (1985) en ingeniería electrónica del
+Instituto Tecnológico de Chihuahua y el grado de
+Ph.D. (1998) de New México State University, Las
+Cruces NM, USA.
+Su experiencia profesional incluye puestos como
+Asistente de Investigador y Asistente de Profesor en
+New México State University. Ha desarrollado
+proyectos de investigación para varias compañías.
+Actualmente es Profesor - Investigador en el Instituto Tecnológico de Chihuahua,
+Chihuahua, Chih., México donde es director de los laboratorios de DSP y Visión
+y Percepción Visual con aplicaciones en Robótica.
+El Dr. Chacón es miembro del Sistema Nacional de Investigadores. Ha publicado
+más de 105 trabajos en revistas internacionales, nacionales y congresos, así como
+la publicación de dos libros. Su investigación actual incluye percepción visual,
+visión por computadora, procesamiento de imágenes y señales usando
+inteligencia computacional y reconocimiento de patrones
